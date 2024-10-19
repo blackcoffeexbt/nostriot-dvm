@@ -52,6 +52,7 @@ const handleJobRequest = async (event: VerifiedEvent) => {
       const jobResult = getJobResultEvent(event, temp.toString());
       const signedEvent = finalizeEvent(jobResult, sk);
       await Promise.any(pool.publish(appConfig.relays, signedEvent));
+      console.log("Published job result event");
       break;
     }
     case "runMotor": {
@@ -81,7 +82,9 @@ pool.subscribeMany(
   ],
   {
     onevent(event) {
-      handleJobRequest(event);
+      // cast the event to a VerifiedEvent
+      const verifiedEvent = event as VerifiedEvent;
+      handleJobRequest(verifiedEvent);
     },
     oneose() {
       console.log("EOSE");

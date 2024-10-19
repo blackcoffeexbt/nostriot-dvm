@@ -12,7 +12,7 @@ async function getPlugin(pluginPath: string, config: PluginConfig) {
 export async function getPlugins(config: AppConfig) {
   const pluginsConfig = config.plugins;
 
-  const plugins: Map<string, any> = new Map();
+  const plugins: Map<string, object> = new Map();
 
   for (const pluginInfo of pluginsConfig) {
     const pluginConfigPath = `./plugins/${pluginInfo.name}/config.json`;

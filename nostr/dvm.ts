@@ -39,7 +39,7 @@ export class JobRequestInputTag {
     return dataObj[0].method;
   }
 
-  get params(): any {
+  get params(): { [key: string]: string } {
     const dataObj = JSON.parse(this._data);
     const params = arrayToKeyedObject(dataObj[0].params);
     return params;
