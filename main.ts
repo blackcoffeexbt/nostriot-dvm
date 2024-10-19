@@ -65,6 +65,23 @@ const handleJobRequest = async (event: VerifiedEvent) => {
       await Promise.any(pool.publish(appConfig.relays, signedEvent));
       break;
     }
+    case "setState": {
+      console.log("Handling setState request");
+      const params = jobRequestInputData.params;
+      const state: number = parseInt(params.value);
+      const result: number = plugins.get("switch").execute(state);
+      let resultText = "";
+      if (result === 1) {
+        resultText = "The switch is now on";
+      } else {
+        resultText = "The switch is now off";
+      }
+      console.log(resultText);
+      const jobResult = getJobResultEvent(event, resultText);
+      const signedEvent = finalizeEvent(jobResult, sk);
+      await Promise.any(pool.publish(appConfig.relays, signedEvent));
+      break;
+    }
     default: {
       console.log("Unknown method", jobRequestInputData.method);
     }

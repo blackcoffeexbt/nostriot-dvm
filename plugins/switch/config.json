@@ -1,0 +1,25 @@
+{
+  "name": "An IoT Switch",
+  "about": "A simulated switch that can be turned on and off",
+  "capability": "setState",
+  "eventTags": {
+    "t": [
+      "state",
+      "unit",
+      "boolean"
+    ],
+    "g": [
+      "u12j"
+    ]
+  },
+  "serviceAnnouncementTags": {
+    "t": [
+      "state",
+      "unit",
+      "boolean"
+    ],
+    "g": [
+      "u12j"
+    ]
+  }
+}
