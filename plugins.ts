@@ -4,6 +4,7 @@ import { loadPluginConfigFile } from "./config.ts";
 async function getPlugin(pluginPath: string, config: PluginConfig) {
   const pluginModule = await import(pluginPath);
   const PluginClass = pluginModule.default;
+  // const pluginInstance = new PluginClass(config);
   const pluginInstance = new PluginClass(config);
 
   return pluginInstance;
@@ -21,6 +22,7 @@ export async function getPlugins(config: AppConfig) {
     ) as PluginConfig;
 
     const plugin = await getPlugin(pluginInfo.path, pluginConfig);
+    await plugin.loadPluginSpecificConfig();
 
     plugins.set(pluginInfo.name, plugin);
   }

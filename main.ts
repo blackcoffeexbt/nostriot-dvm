@@ -33,7 +33,8 @@ for (const plugin of plugins) {
   );
   const signedEvent = finalizeEvent(serviceAnnouncementEvent, sk);
   console.log("publishing service announcement event.");
-  await Promise.any(pool.publish(appConfig.relays, signedEvent));
+  // await Promise.any(pool.publish(appConfig.relays, signedEvent));
+  // await new Promise((resolve) => setTimeout(resolve, 500));
 }
 
 /**
@@ -53,6 +54,20 @@ const handleJobRequest = async (event: VerifiedEvent) => {
       const signedEvent = finalizeEvent(jobResult, sk);
       await Promise.any(pool.publish(appConfig.relays, signedEvent));
       console.log("Published job result event");
+      break;
+    }
+    case "getLocationTemperature": {
+      console.log("Handling getLocationTemperature request");
+      const params = jobRequestInputData.params;
+      const location = params.location;
+      const latLng = location.split(",");
+      const temp = await plugins.get("world-temperature").execute(
+        latLng[0],
+        latLng[1],
+      );
+      const jobResult = getJobResultEvent(event, temp.toString());
+      const signedEvent = finalizeEvent(jobResult, sk);
+      await Promise.any(pool.publish(appConfig.relays, signedEvent));
       break;
     }
     case "runMotor": {

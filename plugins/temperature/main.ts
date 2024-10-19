@@ -1,10 +1,15 @@
 import { PluginConfig } from "../../types.ts";
+import { WorldTemperatureConfig } from "../world-temperature/main.ts";
 
 export default class TemperatureSensor {
   config: PluginConfig;
 
   constructor(config: PluginConfig) {
     this.config = config;
+  }
+
+  async loadPluginSpecificConfig(): Promise<void> {
+    return Promise.resolve();
   }
 
   getName(): string {

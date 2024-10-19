@@ -6,6 +6,10 @@ export default class RunMotor {
     this.config = config;
   }
 
+  async loadPluginSpecificConfig(): Promise<void> {
+    return Promise.resolve();
+  }
+
   getName(): string {
     return this.config.name;
   }
